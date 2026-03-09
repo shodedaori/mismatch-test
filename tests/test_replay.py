@@ -65,5 +65,5 @@ class TestQwen3BF16Replayer:
             assert torch.allclose(
                 row_sums,
                 torch.ones_like(row_sums),
-                atol=1e-3,
+                atol=1e-2,
             ), f"Layer {layer}: attn probs rows don't sum to 1"

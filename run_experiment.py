@@ -17,6 +17,7 @@ import yaml
 
 from utils.data import load_prompts
 from rollout.Qwen3.rollout_simulator import Qwen3RolloutSimulator
+from utils.fp8_ops import Fp8Backend
 from align.Qwen3.bf16_replay import Qwen3BF16Replayer
 from join_metrics import join_and_compute, SequenceMetrics
 
@@ -43,7 +44,7 @@ def run(cfg: dict):
     # ── 1. Rollout simulator ──
     print("Loading rollout simulator (FP8 attention) ...")
     rollout_sim = Qwen3RolloutSimulator(
-        model_name=model_name, seed=seed,
+        model_name=model_name, seed=seed, fp8_backend=Fp8Backend.FLASHINFER,
     )
 
     # ── 2. Load prompts ──

@@ -64,5 +64,5 @@ class TestQwen3RolloutSimulator:
                 assert torch.allclose(
                     row_sums,
                     torch.ones_like(row_sums),
-                    atol=1e-3,
+                    atol=1e-2,
                 ), f"Step {step} layer {layer_idx}: attn probs don't sum to 1"

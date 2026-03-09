@@ -2,7 +2,7 @@
 # Config A: attention FP8, rest BF16
 
 model:
-  name: "Qwen/Qwen3-0.6B"
+  name: "Qwen/Qwen3-14B"
   dtype: "bfloat16"
   attn_implementation: "eager"   # required for attention-weight capture
 
@@ -13,7 +13,7 @@ dataset:
   max_prompt_length: 512
 
 generation:
-  max_new_tokens: 64
+  max_new_tokens: 256
   temperature: 1.0
   seed: 42
 
