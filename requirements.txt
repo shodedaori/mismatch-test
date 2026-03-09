@@ -4,3 +4,4 @@ datasets
 numpy
 pyyaml
 pytest
+matplotlib

@@ -108,6 +108,7 @@ def run(cfg: dict):
 
     # ── 6. Save summary ──
     summary = []
+    step_records = []
     for m in all_metrics:
         entry = {
             "prompt_id": m.prompt_id,
@@ -121,12 +122,32 @@ def run(cfg: dict):
             entry["mean_hidden_l2"] = sum(s.hidden_l2 for s in m.step_metrics) / len(m.step_metrics)
             entry["mean_attn_entropy"] = sum(s.attn_entropy for s in m.step_metrics) / len(m.step_metrics)
             entry["mean_cosine_dist"] = sum(s.hidden_cosine_distance for s in m.step_metrics) / len(m.step_metrics)
+
+            for s in m.step_metrics:
+                step_records.append(
+                    {
+                        "prompt_id": s.prompt_id,
+                        "step": s.step,
+                        "layer": s.layer,
+                        "attn_entropy": s.attn_entropy,
+                        "top1_prob": s.top1_prob,
+                        "tail_mass": s.tail_mass,
+                        "hidden_l2": s.hidden_l2,
+                        "hidden_rel_l2": s.hidden_rel_l2,
+                        "hidden_cosine_distance": s.hidden_cosine_distance,
+                    }
+                )
         summary.append(entry)
 
     out_path = out_dir / "results_summary.json"
     with open(out_path, "w") as f:
         json.dump(summary, f, indent=2)
     print(f"\nResults saved to {out_path}")
+
+    details_path = out_dir / "step_metrics.json"
+    with open(details_path, "w") as f:
+        json.dump(step_records, f, indent=2)
+    print(f"Step metrics saved to {details_path}")
 
 
 def main():
