@@ -1,0 +1,25 @@
+# Mismatch-test experiment configuration
+# Config A: attention FP8, rest BF16
+
+model:
+  name: "Qwen/Qwen3-0.6B"
+  dtype: "bfloat16"
+  attn_implementation: "eager"   # required for attention-weight capture
+
+dataset:
+  name: "HuggingFaceH4/ultrachat_200k"
+  split: "train_sft"
+  num_prompts: 5
+  max_prompt_length: 512
+
+generation:
+  max_new_tokens: 64
+  temperature: 1.0
+  seed: 42
+
+experiment:
+  config: "A"   # A = attention FP8 only
+
+output:
+  dir: "results"
+  save_raw_tensors: false
